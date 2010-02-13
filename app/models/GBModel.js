@@ -111,6 +111,43 @@ GBModel.loadReview = function(reviewItem, callback) {
   this.getUrl(url, _success.bind(this), _error.bind(this));
 }
 
+GBModel.loadBombcasts = function(callback) {
+  function _success(transport) {
+    // parse out data
+    var xmlobject = (new DOMParser()).parseFromString(transport.responseText, "text/xml");
+
+    var bombcastItems = [];
+
+    var items = document.evaluate("/rss/channel/item", xmlobject, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+    var item;
+    while (item = items.iterateNext()) {
+      // title
+      var title = document.evaluate("title", item, null, XPathResult.STRING_TYPE, null).stringValue;
+
+      // description
+      var desc = document.evaluate("description", item, null, XPathResult.STRING_TYPE, null).stringValue;
+
+      // url
+      var nsr = {lookupNamespaceURI: function(ns){return "http://search.yahoo.com/mrss/"}}
+      var content = document.evaluate("media:content", item, nsr, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+      var url = content.getAttribute("url");
+      var mime = content.getAttribute("type");
+      
+      // push the new item
+      bombcastItems.push({title: title, desc: desc, url: url, mime: mime});
+    }
+
+    callback(true, {items: bombcastItems});
+  }
+
+  function _error(transport) {
+    callback(false, null);
+  }
+
+  var url = "http://www.giantbomb.com/podcast-xml/";
+  this.getUrl(url, _success.bind(this), _error.bind(this));
+}
+
 GBModel.getUrl = function(url, successCallback, failureCallback) {
   // we queue up requests
   GBModel.requestQueue.push({url: url, successCallback: successCallback, failureCallback: failureCallback});

@@ -23,7 +23,8 @@ UIHelper.buildCommandMenu = function(scene) {
   items.push({iconPath: "images/video.png", label: "Videos", command: "videos"});
 
   items.push({icon: "search", label: "Search", command: "search"});
-  items.push({icon: "xapp-calendar", label: "Releases", command: "releases"});
+  //items.push({icon: "xapp-calendar", label: "Releases", command: "releases"});
+  items.push({iconPath: "images/podcast.png", label: "Bombcast", command: "bombcast"});
 
   modelitems.push({toggleCmd: scene, items: items});
 

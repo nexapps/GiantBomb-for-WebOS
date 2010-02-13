@@ -39,8 +39,7 @@ VideosAssistant.prototype.onVideoTap = function(event) {
     appId: "com.palm.app.videoplayer",
     name: "nowplaying"
   };
-  Mojo.Log.info(event.item.url);
-  return
+
   var params = {
     target: event.item.url,
     title: event.item.title,

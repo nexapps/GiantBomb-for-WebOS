@@ -26,5 +26,10 @@
   {
     "source": "app\/assistants\/videos-assistant.js",
     "scenes": "videos"
+  },
+
+  {
+    "source": "app\/assistants\/bombcast-assistant.js",
+    "scenes": "bombcast"
   }
 ]
