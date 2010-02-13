@@ -77,6 +77,40 @@ GBModel.loadVideos = function(callback, offset, limit) {
   this.getUrl(url, _success.bind(this), _error.bind(this));
 }
 
+GBModel.loadReviews = function(callback, offset, limit) {
+  var url = "http://api.giantbomb.com/reviews/?api_key="+this.apiKey+"&offset="+(offset ? offset: 0)+"&limit="+limit+"&format=JSON&sort=-publish_date&field_list=api_detail_url,game,reviewer,score,dlc_name,site_detail_url";
+
+  function _success(transport, json) {
+    json = json ? json : transport.responseText.evalJSON(true);
+
+    // format
+    var data = {items: json.results, totalCount: json.number_of_total_results};
+
+    callback(true, data);
+  }
+
+  function _error(transport) {
+    callback(false, null);
+  }
+
+  this.getUrl(url, _success.bind(this), _error.bind(this));
+}
+
+GBModel.loadReview = function(reviewItem, callback) {
+  var url = reviewItem.api_detail_url+"?api_key="+this.apiKey + "&format=JSON";
+
+  function _success(transport, json) {
+    json = json ? json : transport.responseText.evalJSON(true);
+    callback(true, json.results);
+  }
+
+  function _error(transport) {
+    callback(false, null);
+  }
+
+  this.getUrl(url, _success.bind(this), _error.bind(this));
+}
+
 GBModel.getUrl = function(url, successCallback, failureCallback) {
   // we queue up requests
   GBModel.requestQueue.push({url: url, successCallback: successCallback, failureCallback: failureCallback});

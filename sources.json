@@ -3,18 +3,28 @@
     "source": "app/assistants/stage-assistant.js"
   },
 
-	{
-		"source": "app\/assistants\/news-assistant.js",
-		"scenes": "news"
-	},
+  {
+    "source": "app\/assistants\/news-assistant.js",
+    "scenes": "news"
+  },
 
-	{
-		"source": "app\/assistants\/newsarticle-assistant.js",
-		"scenes": "newsarticle"
-	},
+  {
+    "source": "app\/assistants\/newsarticle-assistant.js",
+    "scenes": "newsarticle"
+  },
 
-	{
-		"source": "app\/assistants\/videos-assistant.js",
-		"scenes": "videos"
-	}
+  {
+    "source": "app\/assistants\/reviews-assistant.js",
+    "scenes": "reviews"
+  },
+
+  {
+    "source": "app\/assistants\/review-assistant.js",
+    "scenes": "review"
+  },
+
+  {
+    "source": "app\/assistants\/videos-assistant.js",
+    "scenes": "videos"
+  }
 ]
