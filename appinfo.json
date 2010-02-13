@@ -1,0 +1,9 @@
+{
+  "id": "net.nexapps.giantbomb",
+  "version": "0.0.1",
+  "vendor": "nexapps.net",
+  "type": "native",
+  "main": "index.html",
+  "title": "Giant Bomb",
+  "icon": "icon.png"
+}
