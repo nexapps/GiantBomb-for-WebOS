@@ -111,6 +111,25 @@ GBModel.loadReview = function(reviewItem, callback) {
   this.getUrl(url, _success.bind(this), _error.bind(this));
 }
 
+GBModel.loadSearch = function(term, callback, offset, limit) {
+  var url = "http://api.giantbomb.com/search/?api_key="+this.apiKey+"&query="+encodeURIComponent(term)+"&offset="+(offset ? offset: 0)+"&limit="+limit+"&format=JSON";
+
+  function _success(transport, json) {
+    json = json ? json : transport.responseText.evalJSON(true);
+
+    // format
+    var data = {items: json.results, totalCount: json.number_of_total_results};
+
+    callback(true, data);
+  }
+
+  function _error(transport) {
+    callback(false, null);
+  }
+
+  this.getUrl(url, _success.bind(this), _error.bind(this));
+}
+
 GBModel.loadBombcasts = function(callback) {
   function _success(transport) {
     // parse out data

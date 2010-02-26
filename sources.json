@@ -29,6 +29,11 @@
   },
 
   {
+    "source": "app\/assistants\/search-assistant.js",
+    "scenes": "search"
+  },
+
+  {
     "source": "app\/assistants\/bombcast-assistant.js",
     "scenes": "bombcast"
   }

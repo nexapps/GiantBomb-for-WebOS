@@ -33,6 +33,18 @@ UIHelper.buildCommandMenu = function(scene) {
   return modelitems;
 }
 
+UIHelper.setupAppMenu = function(context) {
+  var items = [];
+  items.push(Mojo.Menu.editItem);
+  items.push({label: "Preferences...", command: Mojo.Menu.prefsCmd, disabled: false});
+  items.push({label: "About MyQ", command: "about", disabled: false});
+  items.push({label: "Help", command: Mojo.Menu.helpCmd, disabled: false});
+
+  this.appMenuModel = {items: items};
+
+  context.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, this.appMenuModel);
+}
+
 UIHelper.showError = function(scene, errorMsg, tryAgainCallback) {
   scene.controller.showAlertDialog({
     onChoose: function() {window.setTimeout(function(){tryAgainCallback()}, 300)},

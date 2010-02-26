@@ -91,3 +91,77 @@ body {
   margin-top: 10px;
   font-size: 14px;
 }
+
+
+/* Search */
+
+.has-search-bar-top .palm-page-header {
+  background: none;
+  padding-bottom: 0px;
+  margin-bottom: 5px;
+  min-height: 52px;
+  -webkit-border-image: none;
+}
+
+.search-bar-top .filter-field-container-height {
+  height: 52px;
+}
+
+.search-bar-top .search-field {
+  height: 50px;
+  position: relative;
+  top: -4px;
+}
+
+.search-bar-top input,
+.search-bar-top textarea {
+  border: none;
+  outline: none;
+}
+
+.search-bar-top .focused .palm-row .textfield-group .search-field input {
+  color: black !important;
+}
+
+.icon.right.submit {
+  display: block;
+  height: 44px;
+  width: 40px;
+  margin-right: -8px;
+  background: url(../images/btn-submit-search.png) center center no-repeat;
+}
+
+.search-bar-top .filter-field-container.focused {
+  -webkit-border-image: url(../images/filter-search-dark-focused-bg.png) 26 23 20 23 repeat repeat;
+}
+
+.search-bar-top .textfield-group {
+  -webkit-border-image: url(../images/framework/textfield-noshadow.png) 15 15 15 15 stretch stretch;
+}
+
+.searchItem {
+  padding-left: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 3px; 
+}
+
+.searchItemData {
+  padding-left: 55px;
+}
+
+.searchItemTitle {
+  font-size: 16px;
+}
+
+.searchItemType {
+  padding-top: 10px;
+  font-size: 14px
+}
+
+.searchIcon {
+  width: 50px;
+  height: 50px;
+  float: left;
+  border: 1px solid #A4A4A4;
+}
