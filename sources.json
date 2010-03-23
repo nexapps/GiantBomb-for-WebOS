@@ -32,9 +32,17 @@
     "source": "app\/assistants\/search-assistant.js",
     "scenes": "search"
   },
-
+  {
+    "source": "app\/assistants\/support-assistant.js",
+    "scenes": "support"
+  },
   {
     "source": "app\/assistants\/bombcast-assistant.js",
     "scenes": "bombcast"
-  }
+  },
+
+  {
+    "source": "app\/assistants\/about-assistant.js",
+    "scenes": "about"
+  },
 ]

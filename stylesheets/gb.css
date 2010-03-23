@@ -165,3 +165,54 @@ body {
   float: left;
   border: 1px solid #A4A4A4;
 }
+
+
+/* support stuff */
+/* Put Application specific CSS here. */
+.img_icon {
+  position:absolute;
+  left:10px;
+  top:5px;
+  width:48px; 
+  height:32px;
+  background: url(../images/gblogo.png) no-repeat center ;
+  padding: 10px 0px 0px 5px;
+  float:left;  
+}
+.list_scene {
+  position:relative;
+  left:48px;
+  top:10px;
+  width:32px; 
+  height:32px;
+  vertical-align:bottom;
+  padding: 0px 0px 0px 5px;
+  float:left;
+}
+.img_email {
+  position:relative;
+  left:8px;
+  top:10px;
+  width:32px; 
+  height:32px;
+  background: url(../images/application-email.png) no-repeat bottom;
+  vertical-align:bottom;
+  padding: 0px 0px 0px 5px;
+  float:left;
+}
+.img_web {
+  position:relative;
+  left:8px;
+  top:10px;
+  width:32px; 
+  height:32px;
+  background: url(../images/application-web.png) no-repeat bottom;
+  padding: 0px 0px 0px 5px;
+  float:left;
+}
+
+.aboutDivider {
+  margin-top: 20px;
+  clear: both;
+}
+

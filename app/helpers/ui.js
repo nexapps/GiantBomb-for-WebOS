@@ -1,4 +1,4 @@
-var UIHelper = {currentScene: null, context: null, commandMenuModel: null};
+var UIHelper = {currentScene: null, context: null, commandMenuModel: null, appMenuModel: null};
 
 UIHelper.setupCommandMenu = function(context, scene) {
   this.context = context;
@@ -34,13 +34,14 @@ UIHelper.buildCommandMenu = function(scene) {
 }
 
 UIHelper.setupAppMenu = function(context) {
-  var items = [];
-  items.push(Mojo.Menu.editItem);
-  items.push({label: "Preferences...", command: Mojo.Menu.prefsCmd, disabled: false});
-  items.push({label: "About MyQ", command: "about", disabled: false});
-  items.push({label: "Help", command: Mojo.Menu.helpCmd, disabled: false});
-
-  this.appMenuModel = {items: items};
+  if (!this.appMenuModel) {
+    var items = [];
+    items.push(Mojo.Menu.editItem);
+    items.push({label: "About...", command: "about", disabled: false});
+    items.push({label: "Help", command: Mojo.Menu.helpCmd, disabled: false});
+  
+    this.appMenuModel = {items: items};
+  }
 
   context.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, this.appMenuModel);
 }
@@ -84,7 +85,7 @@ UIHelper.changeScene = function(context, event) {
     context.controller.stageController.pushScene("about", {transition: Mojo.Transition.crossFade});
   } else if (event.command === Mojo.Menu.helpCmd) {
     context.controller.stageController.pushScene("support", {transition: Mojo.Transition.crossFade});
-  } else {
+  } else if (["news", "newsarticle", "reviews", "review", "search", "videos", "bombcast"].indexOf(event.command) > -1) {
     // default - switch to scene
     UIHelper.currentScene = event.command;
     context.controller.stageController.popScene();
