@@ -25,6 +25,9 @@ SearchAssistant.prototype.setup = function() {
 
   this.controller.setupWidget("resultsList", {itemsCallback: this.loadSearch.bind(this), itemTemplate: "search/searchitem"}, this.itemModel);
 
+  this.listTapHandle = this.listTap.bind(this);
+  this.controller.listen("resultsList", Mojo.Event.listTap, this.listTapHandle);
+
   this.searchTermsChangedHandle = this.searchTermsChanged.bind(this);
   this.controller.listen("search-terms", Mojo.Event.propertyChanged, this.searchTermsChangedHandle);
 
@@ -80,8 +83,19 @@ SearchAssistant.prototype.searchTermsChanged = function(event) {
   }
 }
 
-SearchAssistant.prototype.newsTap = function(event) {
-  this.controller.stageController.pushScene("newsarticle", {transition: Mojo.Transition.zoomFade}, event.item, true);
+SearchAssistant.prototype.listTap = function(event) {
+  this.controller.serviceRequest("palm://com.palm.applicationManager",
+    {
+      method: "open",
+      parameters: {
+        id: "com.palm.app.browser",
+        params: {
+          scene: "page",
+          target: event.item.site_detail_url
+        }
+      }
+    }
+  );
 }
 
 SearchAssistant.prototype.handleCommand = function(event) {
@@ -93,4 +107,6 @@ SearchAssistant.prototype.handleCommand = function(event) {
 SearchAssistant.prototype.cleanup = function(event) {
   this.controller.stopListening("search-button", Mojo.Event.tap, this.doSearchHandle);
   this.controller.stopListening("search-terms", Mojo.Event.propertyChanged, this.searchTermsChangedHandle);
+  this.controller.stopListening("resultsList", Mojo.Event.listTap, this.listTapHandle);
+
 }
