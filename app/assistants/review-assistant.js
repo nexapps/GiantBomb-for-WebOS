@@ -9,6 +9,7 @@ ReviewAssistant.prototype.setup = function() {
 
   $("title").innerHTML = this.reviewItem.game.name;
 
+  UIHelper.setupAppMenu(this);
   
   this.viewOriginalTapHandle = this.viewOriginalTap.bind(this);
   this.controller.listen("viewOriginal", Mojo.Event.tap, this.viewOriginalTapHandle);
@@ -59,6 +60,9 @@ ReviewAssistant.prototype.viewOriginalTap = function(event) {
 }
 
 ReviewAssistant.prototype.handleCommand = function(event) {
+  if (event.type == Mojo.Event.command) {
+    UIHelper.changeScene(this, event);
+  }
 }
 
 ReviewAssistant.prototype.cleanup = function(event) {

@@ -8,6 +8,7 @@ SearchAssistant.prototype.setup = function() {
   this.controller.setupWidget("spinner", {spinnerSize: Mojo.Widget.spinnerLarge}, this.spinnerModel);
   UIHelper.setSpin(this, false);
 
+  UIHelper.setupAppMenu(this);
   UIHelper.setupCommandMenu(this, "search");
 
   var attributes = {

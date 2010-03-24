@@ -6,6 +6,7 @@ VideosAssistant.prototype.setup = function() {
   this.controller.setupWidget("spinner", {spinnerSize: Mojo.Widget.spinnerLarge}, this.spinnerModel);
   UIHelper.setSpin(this, true);
 
+  UIHelper.setupAppMenu(this);
   UIHelper.setupCommandMenu(this, "videos");
 
   // setup list
