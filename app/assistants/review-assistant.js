@@ -66,4 +66,5 @@ ReviewAssistant.prototype.handleCommand = function(event) {
 }
 
 ReviewAssistant.prototype.cleanup = function(event) {
+  this.controller.stopListening("viewOriginal", Mojo.Event.tap, this.viewOriginalTapHandle);
 }

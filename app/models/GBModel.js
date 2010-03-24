@@ -24,8 +24,11 @@ GBModel.loadNews = function(callback) {
       // description
       var desc = document.evaluate("description", item, null, XPathResult.STRING_TYPE, null).stringValue;
 
+      // link
+      var link = document.evaluate("link", item, null, XPathResult.STRING_TYPE, null).stringValue;
+
       // push the new item
-      newsItems.push({title: title, date: date, author: author, desc: desc});
+      newsItems.push({title: title, date: date, author: author, desc: desc, link: link});
     }
 
     callback(true, {items: newsItems});
