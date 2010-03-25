@@ -216,3 +216,47 @@ body {
   clear: both;
 }
 
+.searchItemLabel {
+  display: inline-block;
+  border: 1px solid black; 
+  padding: 0 4px 2px 4px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  -webkit-border-radius: 5px;
+  text-transform : capitalize;
+}
+
+#detailContainer h2 {
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  border-bottom: 1px solid #666666;
+  color: #666666;
+  font-weight: bold;
+}
+
+#detailContainer .wiki-img-left  {
+  float: left;
+  margin: 0 15px 15px 0;
+}
+
+#detailContainer .wiki-img-right {
+  float: right;
+  margin: 0 0 15px 15px;
+}
+
+#detailContainer .wiki-img-screen {
+  width: 192px;
+}
+
+#detailContainer .wiki-img, .wiki-img-small, .wiki-img-thumb, .wiki-img-screen, .wiki-img-medium, .wiki-img-super, .wiki-img-middle {
+  -webkit-border-radius: 5px 5px 5px 5px;
+  background: none repeat scroll 0 0 #111111;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px;
+  text-align: center;
+}

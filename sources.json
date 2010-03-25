@@ -42,7 +42,12 @@
   },
 
   {
+    "source": "app\/assistants\/detail-assistant.js",
+    "scenes": "detail"
+  },
+
+  {
     "source": "app\/assistants\/about-assistant.js",
     "scenes": "about"
-  },
+  }
 ]

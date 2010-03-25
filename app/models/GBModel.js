@@ -115,7 +115,7 @@ GBModel.loadReview = function(reviewItem, callback) {
 }
 
 GBModel.loadSearch = function(term, callback, offset, limit) {
-  var url = "http://api.giantbomb.com/search/?api_key="+this.apiKey+"&query="+encodeURIComponent(term)+"&offset="+(offset ? offset: 0)+"&limit="+limit+"&format=JSON";
+  var url = "http://api.giantbomb.com/search/?api_key="+this.apiKey+"&query="+encodeURIComponent(term)+"&offset="+(offset ? offset: 0)+"&limit="+limit+"&field_list=api_detail_url,resource_type,name,image&format=JSON";
 
   function _success(transport, json) {
     json = json ? json : transport.responseText.evalJSON(true);
@@ -123,6 +123,12 @@ GBModel.loadSearch = function(term, callback, offset, limit) {
     // format
     var data = {items: json.results, totalCount: json.number_of_total_results};
 
+    for (var i = 0; i < data.items.length; i++) {
+      data.items[i].small_url = "";
+      if (data.items[i].image) {
+        data.items[i].small_url = data.items[i].image.small_url;
+      }
+    }
     callback(true, data);
   }
 
@@ -167,6 +173,22 @@ GBModel.loadBombcasts = function(callback) {
   }
 
   var url = "http://www.giantbomb.com/podcast-xml/";
+  this.getUrl(url, _success.bind(this), _error.bind(this));
+}
+
+GBModel.loadApiDetailUrl = function(adurl, callback) {
+  var url = adurl + "?api_key="+this.apiKey+"&format=JSON";
+
+  function _success(transport, json) {
+    json = json ? json : transport.responseText.evalJSON(true);
+
+    callback(true, json.results);
+  }
+
+  function _error(transport) {
+    callback(false, null);
+  }
+
   this.getUrl(url, _success.bind(this), _error.bind(this));
 }
 
