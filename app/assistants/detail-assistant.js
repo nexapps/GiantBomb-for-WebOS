@@ -31,6 +31,14 @@ DetailAssistant.prototype.onItemRecieved = function(success, item) {
       $("subtitle").innerHTML = "<b>Game franchise</b> comprised of "+item.games.length+" games";
     } else if (this.searchItem.resource_type == "location") {
       $("subtitle").innerHTML = "<b>Location</b> that appears in "+item.games.length+" games";
+    } else if (this.searchItem.resource_type == "company") {
+      $("subtitle").innerHTML = "<b>Company</b> that makes video games";
+    } else if (this.searchItem.resource_type == "person") {
+      $("subtitle").innerHTML = "<b>Person</b> that is credited in "+item.games.length+" games";
+    } else if (this.searchItem.resource_type == "object") {
+      $("subtitle").innerHTML = "<b>Object/thing</b> that appears in "+item.games.length+" games";
+    } else if (this.searchItem.resource_type == "concept") {
+      $("subtitle").innerHTML = "<b>Concept</b> that appears in "+item.games.length+" games";
     } else {
       $("subtitle").innerHTML = "<b>"+this.searchItem.resource_type[0].toUpperCase() + this.searchItem.resource_type.substr(1)+"</b>";
     }
