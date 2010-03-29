@@ -121,7 +121,11 @@ SearchAssistant.prototype.nextTap = function(event) {
 
 
 SearchAssistant.prototype.listTap = function(event) {
-  this.controller.stageController.pushScene("detail", {transition: Mojo.Transition.zoomFade}, event.item, true);
+  if (event.item.resource_type == "game") {
+    this.controller.stageController.pushScene("game", {transition: Mojo.Transition.zoomFade}, event.item.api_detail_url, event.item.name);
+  } else {
+    this.controller.stageController.pushScene("detail", {transition: Mojo.Transition.zoomFade}, event.item, true);
+  }
   return;
 
   this.controller.serviceRequest("palm://com.palm.applicationManager",

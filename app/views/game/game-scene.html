@@ -12,11 +12,6 @@
   <div x-mojo-element="Spinner" id="spinner"></div>
 </div>
 
-<div style="margin: 5px; font-size: 16px;">
-  <div id="reviewDetails"></div>
-  <img id="score" src=""/>
-</div>
-
 <div style="margin: 5px; font-size: 14px;">
   <div style="float:left; height: 130px; width: 105px"><img id="gameImage" src="" width="100px" height="120px" /></div>
   <div>
@@ -28,10 +23,15 @@
 
 <div style="clear: both"></div>
 
-<div id="reviewContainer" style="margin: 5px; font-size: 16px;">
+<div id="reviewContainer" style="margin: 5px; font-size: 14px; background-color: #222222; -webkit-border-radius: 8px; padding: 10px 6px 10px 6px; display: none;">
+  <div style="float:right; display: inline-block; font-weight: bold; background-color: #DF2121; color: white; height: 24px; margin-top: -5px; padding: 5px 5px 0px 5px; -webkit-border-radius: 4px;">Read review</div>
+  <img id="reviewScore" src=""/>
 </div>
 
-<div style="margin: 5px; margin-top: 20px;">
+<div id="detailContainer" style="margin: 5px; font-size: 16px;">
+</div>
+
+<div style="margin: 5px; margin-top: 20px; display: none">
   <div class="standalonegblogo" style="float:left"></div>
   <div id="viewOriginal" style="color: lightblue; text-decoration: underline;">View original article</div>
   <div style="clear:both">

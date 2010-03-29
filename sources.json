@@ -42,6 +42,11 @@
   },
 
   {
+    "source": "app\/assistants\/game-assistant.js",
+    "scenes": "game"
+  },
+
+  {
     "source": "app\/assistants\/detail-assistant.js",
     "scenes": "detail"
   },

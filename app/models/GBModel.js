@@ -189,6 +189,7 @@ GBModel.loadApiDetailUrl = function(adurl, callback) {
     callback(false, null);
   }
 
+  Mojo.Log.info(url)
   this.getUrl(url, _success.bind(this), _error.bind(this));
 }
 
