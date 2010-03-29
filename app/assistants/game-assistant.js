@@ -74,7 +74,36 @@ GameAssistant.prototype.onGameRecieved = function(success, data) {
 GameAssistant.prototype.commandSelected = function(command) {
   if (!!command && command != this.currentView) {
     this.currentView = command;
+
+      UIHelper.setSpin(this, true);
+
+    if (command == "reviews") {
+      this.onCommandSelectedRecieved(true);
+    } else if (command == "overview") {
+      this.onCommandSelectedRecieved(true);
+    }
   }
+}
+
+GameAssistant.prototype.onCommandSelectedRecieved = function(success, data) {
+  if (success) {
+    // hide the small review area
+    $("reviewContainer").style.display = "none";
+
+    if (this.currentView == "reviews") {
+      // review is already loaded
+
+      var stars = "<div style='margin-bottom: 5px;'> <div style='float:right'>Review by "+this.gameItem.reviews[0].reviewer+"</div><img src='images/star-"+this.gameItem.reviews[0].score+".png'/></div>"
+      $("detailContainer").innerHTML = stars + this.gameItem.reviews[0].description;
+    } else if (this.currentView = "overview") {
+      $("reviewContainer").style.display = "block";
+      $("detailContainer").innerHTML = this.gameItem.description;
+    }
+  } else {
+    // TODO: impl
+  }
+
+  UIHelper.setSpin(this, false);
 }
 
 GameAssistant.prototype.handleCommand = function(event) {
