@@ -126,20 +126,6 @@ SearchAssistant.prototype.listTap = function(event) {
   } else {
     this.controller.stageController.pushScene("detail", {transition: Mojo.Transition.zoomFade}, event.item, true);
   }
-  return;
-
-  this.controller.serviceRequest("palm://com.palm.applicationManager",
-    {
-      method: "open",
-      parameters: {
-        id: "com.palm.app.browser",
-        params: {
-          scene: "page",
-          target: event.item.site_detail_url
-        }
-      }
-    }
-  );
 }
 
 SearchAssistant.prototype.handleCommand = function(event) {

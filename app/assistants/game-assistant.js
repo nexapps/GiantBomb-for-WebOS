@@ -1,6 +1,8 @@
-function GameAssistant(args, gameApiUrl, name) {
+function GameAssistant(args, gameApiUrl, name, optionalMode) {
   this.apiUrl = gameApiUrl;
   this.passedInName = name;
+
+  this.optionalMode = optionalMode;
 }
 
 GameAssistant.prototype.setup = function() {
@@ -33,7 +35,6 @@ GameAssistant.prototype.loadGame = function() {
 
 GameAssistant.prototype.onGameRecieved = function(success, data) {
   if (success) {
-    try {
     this.gameItem = data;
 
     $("title").innerHTML = data.name;
@@ -69,11 +70,14 @@ GameAssistant.prototype.onGameRecieved = function(success, data) {
       $("reviewScore").src = "images/star-"+data.reviews[0].score+".png";
     }
 
-    // data
-    $("detailContainer").innerHTML = data.description;
-    } catch (e) {
-      Mojo.Log.info(e)
-  }
+    if (this.optionalMode) {
+      if (this.optionalMode == "review") {
+        this.commandSelected("reviews");
+      }
+    } else {
+      // data
+      $("detailContainer").innerHTML = data.description;
+    }
   } else {
     // TODO: handle error case
   }
@@ -95,7 +99,7 @@ GameAssistant.prototype.commandSelected = function(command) {
       this.onCommandSelectedRecieved(true);
     } else if (command == "overview") {
       this.onCommandSelectedRecieved(true);
-    } else if (command == "images" || command == "similar") {
+    } else if (command == "images" || command == "similar" || command == "videos") {
       this.onCommandSelectedRecieved(true);
     }
   }
@@ -113,9 +117,20 @@ GameAssistant.prototype.onCommandSelectedRecieved = function(success, data) {
     }
 
     if (this.currentView == "reviews") {
-      // review is already loaded
-      var stars = "<div style='margin-bottom: 5px;'> <div style='float:right'>Review by "+this.gameItem.reviews[0].reviewer+"</div><img src='images/star-"+this.gameItem.reviews[0].score+".png'/></div>"
-      $("detailContainer").innerHTML = stars + this.gameItem.reviews[0].description;
+      // get the oldest review
+      var review = null;
+      var rdate = null;
+
+      for (var i = 0; i < this.gameItem.reviews.length; i++) {
+        var d = new Date(this.gameItem.reviews[i].publish_date.replace("-", " "))
+        if (rdate == null || rdate > d) {
+          review = this.gameItem.reviews[i];
+          rdate = d;
+        }
+      }
+
+      var stars = "<div style='margin-bottom: 5px;'> <div style='float:right'>Review by "+review.reviewer+"</div><img src='images/star-"+review.score+".png'/></div>"
+      $("detailContainer").innerHTML = stars + review.description;
     } else if (this.currentView == "overview") {
       if (this.gameItem.reviews && this.gameItem.reviews.length > 0) {
         $("reviewContainer").style.display = "block";
@@ -140,6 +155,15 @@ GameAssistant.prototype.onCommandSelectedRecieved = function(success, data) {
 
       this.listTapHandle = this.onSimilarTap.bind(this);
       this.controller.listen("detailsList", Mojo.Event.listTap, this.listTapHandle);
+    } else if (this.currentView == "videos") {
+      $("detailContainer").innerHTML = "";
+      this.controller.setupWidget("detailsList", this.attributes = {itemTemplate: "game/videoitem"}, this.detailsModel = {items: this.gameItem.videos});
+      this.controller.update($("detailContainer"), '<div id="detailsList" x-mojo-element="List"></div>');
+      this.controller.instantiateChildWidgets($("detailContainer"));
+      $("detailsList").mojo.setLengthAndInvalidate(this.gameItem.videos.length);
+
+      this.listTapHandle = this.onVideoTap.bind(this);
+      this.controller.listen("detailsList", Mojo.Event.listTap, this.listTapHandle);
     }
   } else {
     // TODO: impl
@@ -158,6 +182,21 @@ GameAssistant.prototype.onImageTap = function(event) {
 
 GameAssistant.prototype.onSimilarTap = function(event) {
   this.controller.stageController.pushScene("game", {transition: Mojo.Transition.zoomFade}, event.item.api_detail_url, event.item.name);
+}
+
+GameAssistant.prototype.onVideoTap = function(event) {
+  var args = {
+    appId: "com.palm.app.videoplayer",
+    name: "nowplaying"
+  };
+
+  var params = {
+    target: GBModel.processVideoUrl(event.item.url),
+    title: event.item.title,
+    thumbUrl: event.item.image.super_url
+  };
+
+  this.controller.stageController.pushScene(args, params);
 }
 
 GameAssistant.prototype.handleCommand = function(event) {
@@ -185,5 +224,5 @@ GameAssistant.prototype.cleanup = function(event) {
     this.controller.stopListening("detailsList", Mojo.Event.listTap, this.listTapHandle);
   }
 
-  this.controller.stopListening("reviewButton", Mojo.Event.taop, this.reviewTapHandle);
+  this.controller.stopListening("reviewButton", Mojo.Event.tap, this.reviewTapHandle);
 }

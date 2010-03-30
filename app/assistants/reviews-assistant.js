@@ -36,7 +36,12 @@ ReviewsAssistant.prototype.onReviewsRecieved = function(listWidget, offset, limi
 }
 
 ReviewsAssistant.prototype.onReviewTap = function(event) {
-  this.controller.stageController.pushScene("review", {transition: Mojo.Transition.zoomFade}, event.item, true);
+  // hack - dlc gets own review page, as game's can't easily access dlc reviews
+  if (event.item.dlc_name) {
+    this.controller.stageController.pushScene("review", {transition: Mojo.Transition.zoomFade}, event.item, true);
+  } else {
+    this.controller.stageController.pushScene("game", {transition: Mojo.Transition.zoomFade}, event.item.game.api_detail_url, event.item.game.name, "review");
+  }
 }
 
 ReviewsAssistant.prototype.handleCommand = function(event) {

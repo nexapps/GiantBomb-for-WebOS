@@ -42,6 +42,24 @@ GBModel.loadNews = function(callback) {
   this.getUrl(url, _success.bind(this), _error.bind(this));
 }
 
+GBModel.processVideoUrl = function(originalUrl) {
+  // video formatting is a bit weird, thanks to http://giantbomb-android.googlecode.com/svn/trunk/src/harris/GiantBomb/VideoFeedParser.java
+  // for figuring it out
+
+  var url = "http://media.giantbomb.com/video/";
+  var index = originalUrl.indexOf(".flv");
+
+  if (index != -1) {
+    url += originalUrl.substr(0, index);
+  } else {
+    url = originalUrl;
+  }
+
+  url += "_ip.m4v?api_key=" + this.apiKey;
+
+  return url;
+}
+
 GBModel.loadVideos = function(callback, offset, limit) {
   var url = "http://api.giantbomb.com/videos/?api_key="+this.apiKey+"&offset="+(offset ? offset: 0)+"&limit="+limit+"&format=JSON&sort=-publish_date";
 
@@ -53,21 +71,7 @@ GBModel.loadVideos = function(callback, offset, limit) {
     for (var i = 0; i < json.results.length; i++) {
       var result = json.results[i];
 
-      // video formatting is a bit weird, thanks to http://giantbomb-android.googlecode.com/svn/trunk/src/harris/GiantBomb/VideoFeedParser.java
-      // for figuring it out
-
-      var url = "http://media.giantbomb.com/video/";
-      var index = result.url.indexOf(".flv");
-
-      if (index != -1) {
-        url += result.url.substr(0, index);
-      } else {
-        url = result.url;
-      }
-
-      url += "_ip.m4v?api_key=" + this.apiKey;
-
-      data.items.push({title: result.name, description: result.deck, image: result.image.small_url, superImage: result.image.super_url, url: url});
+      data.items.push({title: result.name, description: result.deck, image: result.image.small_url, superImage: result.image.super_url, url: GBModel.processVideoUrl(result.url)});
     }
 
     callback(true, data);
