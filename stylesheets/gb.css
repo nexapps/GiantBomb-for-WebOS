@@ -284,3 +284,18 @@ body {
   margin-top:6px;
 }
 
+.gameImageThumb {
+  max-height: 85px;
+  vertical-align: center;
+  text-align: center;
+}
+
+.gameImageRow {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.similarGameRow {
+  padding-top: 14px;
+}

@@ -52,6 +52,11 @@
   },
 
   {
+    "source": "app\/assistants\/images-assistant.js",
+    "scenes": "images"
+  },
+
+  {
     "source": "app\/assistants\/about-assistant.js",
     "scenes": "about"
   }
