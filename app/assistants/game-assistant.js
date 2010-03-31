@@ -177,7 +177,10 @@ GameAssistant.prototype.imageFetch = function(listWidget, offset, limit) {
 }
 
 GameAssistant.prototype.onImageTap = function(event) {
-  this.controller.stageController.pushScene("images", {transition: Mojo.Transition.zoomFade}, this.gameItem.images, 0);
+  // get the selected index
+  var idx = this.gameItem.images.indexOf(event.item);
+
+  this.controller.stageController.pushScene("images", {transition: Mojo.Transition.zoomFade}, this.gameItem.images, idx);
 }
 
 GameAssistant.prototype.onSimilarTap = function(event) {

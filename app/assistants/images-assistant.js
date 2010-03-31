@@ -29,7 +29,6 @@ ImagesAssistant.prototype.updateDimensions = function(event) {
 	  $("imageView").style.height = height + "px";
 	  $("imageView").style.width = width + "px";
 	}
-	
 }
 
 ImagesAssistant.prototype.setImages = function() {
