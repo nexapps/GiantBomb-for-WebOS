@@ -119,7 +119,6 @@ SearchAssistant.prototype.nextTap = function(event) {
   this.loadSearch(this.controller.get("resultsList"), this.currentOffset+20, 20);
 }
 
-
 SearchAssistant.prototype.listTap = function(event) {
   if (event.item.resource_type == "game") {
     this.controller.stageController.pushScene("game", {transition: Mojo.Transition.zoomFade}, event.item.api_detail_url, event.item.name);

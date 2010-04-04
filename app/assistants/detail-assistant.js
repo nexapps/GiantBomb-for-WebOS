@@ -21,7 +21,14 @@ DetailAssistant.prototype.onItemRecieved = function(success, item) {
   if (success) {
     this.detailItem = item;
 
-    $("detailContainer").innerHTML = item.description;
+    if (item.description) {
+      $("detailContainer").innerHTML = item.description;
+    }
+
+    if (this.videoTapHandle) {
+      this.controller.stopListening("videosList", Mojo.Event.listTap, this.videoTapHandle);
+      this.videoTapHandle = null;
+    }
 
     if (this.searchItem.resource_type == "character") {
       $("subtitle").innerHTML = "<b>Character</b> that appears in "+item.games.length+" games";
@@ -39,8 +46,16 @@ DetailAssistant.prototype.onItemRecieved = function(success, item) {
       $("subtitle").innerHTML = "<b>Object/thing</b> that appears in "+item.games.length+" games";
     } else if (this.searchItem.resource_type == "concept") {
       $("subtitle").innerHTML = "<b>Concept</b> that appears in "+item.games.length+" games";
+    } else if (this.searchItem.resource_type == "video") {
+      $("subtitle").innerHTML = "<b>Video</b>";
+
+      $("detailContainer").innerHTML = "<div id='videoItem' style='position: relative; margin-top: 10px'><img src='"+item.image.screen_url+"'/><div style='position: absolute; left: 0px; bottom: 0px'><img src='images/play-button.png'/></div></div>" + item.deck;
+
+      this.videoTapHandle = this.onVideoTap.bind(this);
+      this.controller.listen("videoItem", Mojo.Event.tap, this.videoTapHandle);
+      
     } else {
-      $("subtitle").innerHTML = "<b>"+this.searchItem.resource_type[0].toUpperCase() + this.searchItem.resource_type.substr(1)+"</b>";
+      $("subtitle").innerHTML = "<b>"+this.searchItem.resource_type[0].toUpperCase() + this.searchItem.resource_type.substr(1)+"</b> + this";
     }
 
     $("viewOriginalContainer").style.display = "block";
@@ -55,6 +70,22 @@ DetailAssistant.prototype.handleCommand = function(event) {
   if (event.type == Mojo.Event.command) {
     UIHelper.changeScene(this, event);
   }
+}
+
+
+DetailAssistant.prototype.onVideoTap = function(event) {
+  var args = {
+    appId: "com.palm.app.videoplayer",
+    name: "nowplaying"
+  };
+
+  var params = {
+    target: GBModel.processVideoUrl(this.detailItem.url),
+    title: this.detailItem.name,
+    thumbUrl: this.detailItem.image.super_url
+  };
+
+  this.controller.stageController.pushScene(args, params);
 }
 
 DetailAssistant.prototype.viewOriginalTap = function(event) {
@@ -76,4 +107,8 @@ DetailAssistant.prototype.viewOriginalTap = function(event) {
 
 DetailAssistant.prototype.cleanup = function(event) {
   this.controller.stopListening("viewOriginal", Mojo.Event.tap, this.viewOriginalTapHandle);
+
+  if (this.videoTapHandle) {
+    this.controller.stopListening("videosList", Mojo.Event.listTap, this.videoTapHandle);
+  }
 }
