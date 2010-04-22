@@ -116,6 +116,9 @@ GameAssistant.prototype.onCommandSelectedRecieved = function(success, data) {
       this.listTapHandle = null;
     }
 
+    // scroll to top
+    this.controller.getSceneScroller().mojo.revealTop(0);
+
     if (this.currentView == "reviews") {
       // get the oldest review
       var review = null;
