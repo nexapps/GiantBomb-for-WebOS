@@ -46,7 +46,11 @@ GBModel.processVideoUrl = function(originalUrl) {
   // video formatting is a bit weird, thanks to http://giantbomb-android.googlecode.com/svn/trunk/src/harris/GiantBomb/VideoFeedParser.java
   // for figuring it out
 
-  var url = "http://media.giantbomb.com/video/";
+  var url = "";
+  if (!originalUrl.startsWith("http://media.giantbomb.com/video/")) {
+    url = "http://media.giantbomb.com/video/";
+  }
+
   var index = originalUrl.indexOf(".flv");
 
   if (index != -1) {
