@@ -278,10 +278,18 @@ body {
   text-align: center;
 }
 
+.wiki-img-small img, 
+.wiki-img-thumb img, 
+.wiki-img-screen img, 
+.wiki-img-medium img,
+.wiki-img-super img {
+  max-width: 290px;
+}
+
 #detailContainer .plain-list li {
-  list-style-type:square;
-  margin-left:25px;
-  margin-top:6px;
+  list-style-type: square;
+  margin-left: 25px;
+  margin-top: 6px;
 }
 
 .gameImageThumb {
