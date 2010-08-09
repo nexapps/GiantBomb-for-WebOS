@@ -24,18 +24,13 @@ body {
 
 /* news item */
 .newsItem {
-  padding: 5px 5px 5px 5px;
+  padding: 5px 5px 10px 5px;
   clear: both;
 }
 
 .newsItemTitle {
   font-size: 18px;
   min-height: 40px;
-}
-
-.newsItemSubRow {
-  padding-top: 5px;
-  font-size: 12px;
 }
 
 .videoItem {

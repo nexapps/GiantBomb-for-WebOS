@@ -1,6 +1,6 @@
 {
   "id": "net.nexapps.giantbomb",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "vendor": "nexapps.net",
   "type": "native",
   "main": "index.html",

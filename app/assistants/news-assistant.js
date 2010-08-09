@@ -11,7 +11,7 @@ NewsAssistant.prototype.setup = function() {
 
   // setup list
   this.newsModel = {items: []};
-  this.controller.setupWidget("newsList", {itemsCallback: this.loadNews.bind(this), itemTemplate: "news/newsitem"}, this.newsModel);
+  this.controller.setupWidget("newsList", {itemsCallback: this.loadNews.bind(this), itemTemplate: "news/newsitem", dividerFunction: this.dividerFunction.bind(this), dividerTemplate: "news/divideritem"}, this.newsModel);
 
   // event listeners
   this.newsTapHandle = this.newsTap.bind(this);
@@ -36,6 +36,10 @@ NewsAssistant.prototype.loadNews = function(listWidget, offset, limit) {
 
  
   GBModel.loadNews(_callback.bind(this));
+}
+
+NewsAssistant.prototype.dividerFunction = function(item) {
+  return item.date;
 }
 
 NewsAssistant.prototype.newsTap = function(event) {
