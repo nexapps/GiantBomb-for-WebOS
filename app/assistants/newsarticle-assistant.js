@@ -33,10 +33,29 @@ NewsarticleAssistant.prototype.setup = function() {
     }
   }
 
+  // replace GB links
+  var gblinks = desc.match(new RegExp('<a[^>]*href="http://www.giantbomb.com/[^"]*">([^<]*)</a>', "gi"))
+
+  if (gblinks) {
+    for (var i = 0; i < gblinks.length; i++) {
+      Mojo.Log.info(gblinks[i] + "\n\n");
+      var link = gblinks[i].match(new RegExp("href=\"([^\"]*)\"", "i"))[1];
+      var name = gblinks[i].match(new RegExp(">([^<]*)<", "i"))[1];
+      desc = desc.replace(gblinks[i], "<span class='newsgblink' link='"+link+"'>"+name+"</span>");
+    }
+  }
+
   this.videoTapHandle = this.videoTap.bind(this);
   this.controller.listen("newsContainer", Mojo.Event.tap, this.videoTapHandle);
 
+  this.linkTapHandle = this.linkTap.bind(this);
+  this.controller.listen("newsContainer", Mojo.Event.tap, this.linkTapHandle);
+
   $("newsContainer").innerHTML = desc;
+
+  if (this.controller.stageController.setWindowOrientation) {
+    this.controller.stageController.setWindowOrientation("free");
+  }
 };
 
 NewsarticleAssistant.prototype.videoTap = function(event) {
@@ -120,6 +139,11 @@ NewsarticleAssistant.prototype.showYoutubeVideo = function(url) {
         }
      }
   });
+}
+
+NewsarticleAssistant.prototype.linkTap = function(event) {
+  Mojo.Log.info("tappy")
+  event.stop();
 }
 
 NewsarticleAssistant.prototype.handleCommand = function(event) {

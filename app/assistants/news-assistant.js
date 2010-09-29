@@ -18,7 +18,7 @@ NewsAssistant.prototype.setup = function() {
   this.controller.listen("newsList", Mojo.Event.listTap, this.newsTapHandle);
 
   if (this.controller.stageController.setWindowOrientation) {
-    //this.controller.stageController.setWindowOrientation("free");
+    this.controller.stageController.setWindowOrientation("free");
   }
 };
 
