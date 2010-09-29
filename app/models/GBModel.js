@@ -15,7 +15,7 @@ GBModel.loadNews = function(callback) {
 
       // pub date
       var pubDate = document.evaluate("pubDate", item, null, XPathResult.STRING_TYPE, null).stringValue;
-      var date = Mojo.Format.formatDate(new Date(pubDate), "EEE, MMM d, yyyy");
+      var date = Mojo.Format.formatDate(new Date(pubDate), "EEEE, MMM d, yyyy");
 
       // author
       var nsr = {lookupNamespaceURI: function(ns){return "http://purl.org/dc/elements/1.1/"}}
@@ -51,7 +51,7 @@ GBModel.processVideoUrl = function(originalUrl) {
     url = "http://media.giantbomb.com/video/";
   }
 
-  var index = originalUrl.indexOf(".flv");
+  var index = originalUrl.indexOf(".mp4");
 
   if (index != -1) {
     url += originalUrl.substr(0, index);
@@ -59,7 +59,7 @@ GBModel.processVideoUrl = function(originalUrl) {
     url = originalUrl;
   }
 
-  url += "_ip.m4v?api_key=" + this.apiKey;
+  url += "_350.mp4?api_key=" + this.apiKey;
 
   return url;
 }
