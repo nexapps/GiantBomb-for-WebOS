@@ -34,16 +34,7 @@ NewsarticleAssistant.prototype.setup = function() {
   }
 
   // replace GB links
-  var gblinks = desc.match(new RegExp('<a[^>]*href="http://www.giantbomb.com/[^"]*">([^<]*)</a>', "gi"))
-
-  if (gblinks) {
-    for (var i = 0; i < gblinks.length; i++) {
-      Mojo.Log.info(gblinks[i] + "\n\n");
-      var link = gblinks[i].match(new RegExp("href=\"([^\"]*)\"", "i"))[1];
-      var name = gblinks[i].match(new RegExp(">([^<]*)<", "i"))[1];
-      desc = desc.replace(gblinks[i], "<span class='newsgblink' link='"+link+"'>"+name+"</span>");
-    }
-  }
+  desc = UIHelper.fixupLinks(desc)
 
   this.videoTapHandle = this.videoTap.bind(this);
   this.controller.listen("newsContainer", Mojo.Event.tap, this.videoTapHandle);
@@ -142,8 +133,18 @@ NewsarticleAssistant.prototype.showYoutubeVideo = function(url) {
 }
 
 NewsarticleAssistant.prototype.linkTap = function(event) {
-  Mojo.Log.info("tappy")
-  event.stop();
+  if (event.target.className == "newsgblink") {
+    event.stop();
+  
+    var link = event.target.getAttribute("link")
+    var item = UIHelper.buildFromLink(link);
+  
+    if (item.resource_type == "game") {
+      this.controller.stageController.pushScene("game", {transition: Mojo.Transition.zoomFade}, item.api_detail_url, "");
+    } else {
+      this.controller.stageController.pushScene("detail", {transition: Mojo.Transition.zoomFade}, item, true);
+    }
+  }
 }
 
 NewsarticleAssistant.prototype.handleCommand = function(event) {

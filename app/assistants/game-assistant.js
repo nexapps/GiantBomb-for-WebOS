@@ -26,6 +26,9 @@ GameAssistant.prototype.setup = function() {
   this.reviewTapHandle = this.onReviewButtonTap.bind(this);
   this.controller.listen("reviewButton", Mojo.Event.tap, this.reviewTapHandle);
 
+  this.linkTapHandle = this.linkTap.bind(this);
+  this.controller.listen("detailContainer", Mojo.Event.tap, this.linkTapHandle);
+
   this.loadGame();
 };
 
@@ -76,7 +79,7 @@ GameAssistant.prototype.onGameRecieved = function(success, data) {
       }
     } else {
       // data
-      $("detailContainer").innerHTML = data.description;
+      $("detailContainer").innerHTML = UIHelper.fixupLinks(data.description);
     }
   } else {
     // TODO: handle error case
@@ -205,6 +208,22 @@ GameAssistant.prototype.onVideoTap = function(event) {
   this.controller.stageController.pushScene(args, params);
 }
 
+GameAssistant.prototype.linkTap = function(event) {
+  if (event.target.className == "newsgblink") {
+    event.stop();
+  
+    var link = event.target.getAttribute("link")
+    var item = UIHelper.buildFromLink(link);
+  
+    if (item.resource_type == "game") {
+      this.controller.stageController.pushScene("game", {transition: Mojo.Transition.zoomFade}, item.api_detail_url, "");
+    } else {
+      this.controller.stageController.pushScene("detail", {transition: Mojo.Transition.zoomFade}, item, true);
+    }
+  }
+}
+
+
 GameAssistant.prototype.handleCommand = function(event) {
   if (event.command == "viewOptions") {
     var options = [];
@@ -231,4 +250,5 @@ GameAssistant.prototype.cleanup = function(event) {
   }
 
   this.controller.stopListening("reviewButton", Mojo.Event.tap, this.reviewTapHandle);
+  this.controller.stopListening("detailContainer", Mojo.Event.listTap, this.linkTapHandle);
 }

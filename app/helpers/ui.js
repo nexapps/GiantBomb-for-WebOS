@@ -55,6 +55,79 @@ UIHelper.showError = function(scene, errorMsg, tryAgainCallback) {
   });
 }
 
+UIHelper.fixupLinks = function(desc) {
+  var gblinks = desc.match(new RegExp('<a[^>]*href="http://www.giantbomb.com/[^"]*">([^<]*)</a>', "gi"))
+
+  if (gblinks) {
+    for (var i = 0; i < gblinks.length; i++) {
+      //Mojo.Log.info(gblinks[i] + "\n\n");
+      var link = gblinks[i].match(new RegExp("href=\"([^\"]*)\"", "i"))[1];
+      var name = gblinks[i].match(new RegExp(">([^<]*)<", "i"))[1];
+      desc = desc.replace(gblinks[i], "<span class='newsgblink' link='"+link+"'>"+name+"</span>");
+    }
+  }
+
+  return desc;
+}
+
+UIHelper.buildFromLink = function(link) {
+ // url is like this: http://www.giantbomb.com/kinect-support/92-3249/
+  var split = link.split("/");
+  var data = split[split.length-2];
+  split = data.split("-");
+  var type = parseInt(split[0], 10);
+  var id = split[1];
+
+  var item = {};
+  switch (type) {
+    case 61:
+      item.resource_type = "game";
+      item.api_detail_url = "http://api.giantbomb.com/game/"+id+"/";
+      break;
+    case 62:
+      item.resource_type = "franchise";
+      item.api_detail_url = "http://api.giantbomb.com/franchise/"+id+"/";
+      break;
+    case 92:
+      item.resource_type = "concept";
+      item.api_detail_url = "http://api.giantbomb.com/concept/"+id+"/";
+      break;
+    case 94:
+      item.resource_type = "character";
+      item.api_detail_url = "http://api.giantbomb.com/character/"+id+"/";
+      break;
+    case 60:
+      item.resource_type = "platform";
+      item.api_detail_url = "http://api.giantbomb.com/platform/"+id+"/";
+      break;
+    case 72:
+      item.resource_type = "person";
+      item.api_detail_url = "http://api.giantbomb.com/person/"+id+"/";
+      break;
+    case 65:
+      item.resource_type = "company";
+      item.api_detail_url = "http://api.giantbomb.com/company/"+id+"/";
+      break;
+    case 95:
+      item.resource_type = "location";
+      item.api_detail_url = "http://api.giantbomb.com/location/"+id+"/";
+      break;
+    case 59:
+      item.resource_type = "accessory";
+      item.api_detail_url = "http://api.giantbomb.com/accessory/"+id+"/";
+      break;
+    case 141:
+      item.resource_type = "review";
+      item.api_detail_url = "http://api.giantbomb.com/review/"+id+"/";
+      break;
+    case 17:
+      item.resource_type = "video";
+      item.api_detail_url = "http://api.giantbomb.com/video/"+id+"/";
+      break;
+  }
+
+  return item;
+}
 
 UIHelper.setSpin = function(context, enabled) {
   if (enabled) {
