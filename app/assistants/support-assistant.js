@@ -2,7 +2,7 @@
 _APP_Name = "Giant Bomb";
 _APP_VersionNumber = Mojo.appInfo.version;
 _APP_PublisherName = 'nexapps.net'
-_APP_Copyright = '&copy; Copyright 2010 nexapps.net.'
+_APP_Copyright = '&copy; Copyright 2010-2011 nexapps.net.'
 
 // At least one of these three is required
 //_APP_Support_URL = "http://nexapps.net/support/index.php?mode=webos";
